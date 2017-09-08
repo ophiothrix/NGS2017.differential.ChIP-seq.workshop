@@ -27,7 +27,7 @@ if (!dir.exists("config")) {
 }
 
 ## Set the path to data directory
-data.path <- "./differential.ChIP-seq.data"
+data.path <- paste0(getwd(), "/differential.ChIP-seq.data")
 ## Soft link to data directory
 system(paste0("ln -s ", data.path, "/* ./data"))
 
@@ -526,4 +526,3 @@ cluster.bed.file <- rbind(c("track color=0,60,120 useScore=1 db=mm10", "NA", "NA
 write.table(cluster.bed.file, file = "./reports/cluster.level.db.results.bed", quote = F, sep = "\t", row.names = F, col.names = F, na = "")
 
 ```
-
