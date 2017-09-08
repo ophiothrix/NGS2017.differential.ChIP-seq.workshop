@@ -20,6 +20,7 @@ if(!("org.Mm.eg.db" %in% installed.packages())) {source("http://bioconductor.org
 if(!("ProjectTemplate" %in% installed.packages())) {install.packages("ProjectTemplate")}
 
 ## Create the directory structure
+file.remove("README.md")
 library(ProjectTemplate)
 if (!dir.exists("config")) {
 	create.project(getwd(), merge.strategy = "allow.non.conflict")
