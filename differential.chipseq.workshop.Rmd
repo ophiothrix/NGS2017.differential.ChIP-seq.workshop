@@ -27,9 +27,11 @@ if (!dir.exists("config")) {
 }
 
 ## Set the path to data directory
-data.path <- paste0(getwd(), "/differential.ChIP-seq.data")
+# data.path <- paste0(getwd(), "/differential.ChIP-seq.data")
+data.path <- "../differential.ChIP-seq.data"
 ## Soft link to data directory
-system(paste0("ln -s ", data.path, "/* ./data"))
+system("rm -r data")
+system(paste0("ln -s ", data.path, " data"))
 
 ## Copy project configuration file
 system("cp global.dcf ./config")
