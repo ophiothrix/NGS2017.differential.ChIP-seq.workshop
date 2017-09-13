@@ -89,6 +89,7 @@ if (file.exists("./cache/correlated.reads.rds")) {
 	correlated.reads <- correlateReads(bam.files, max.delay, param=dedup.on)
 	saveRDS(correlated.reads, "./cache/correlated.reads.rds")
 }
+max.delay <- 1000
 plot(0:max.delay,  correlated.reads, ylab="CCF", xlab="Delay(bp)")
 abline(v = seq(150, 200, 10), lty=2)
 ```
