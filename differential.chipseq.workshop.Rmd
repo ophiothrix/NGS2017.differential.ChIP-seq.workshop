@@ -479,21 +479,23 @@ names(enh.anno) <- paste0(seqnames(enh.anno), ":", start(enh.anno), "-", end(enh
 # head(enh.anno)
 
 ### Find overlaps with the gene body
-olaps <- as.data.frame(findOverlaps(GRanges(tabcom[,12:14]), gene.anno, maxgap = 1000))
+## get column indices for coordinates
+coord.cols <- grep("seqnames", colnames(tabcom)):grep("end", colnames(tabcom))
+olaps <- as.data.frame(findOverlaps(GRanges(tabcom[,coord.cols]), gene.anno, maxgap = 1000))
 ## For each cluster id find all genes that it overlaps and report a list of unique gene symbols
 region.Symbols <- tapply(olaps$subjectHits, olaps$queryHits, function(x) paste(unique(gene.anno[x]$Symbols), collapse = "; "))
 tabcom$gene.overlap <- NA
 tabcom$gene.overlap[as.numeric(names(region.Symbols))] <- region.Symbols
 
 ### Find overlaps with the promoter
-olaps <- as.data.frame(findOverlaps(GRanges(tabcom[,12:14]), tss.anno, maxgap = 1000))
+olaps <- as.data.frame(findOverlaps(GRanges(tabcom[,coord.cols]), tss.anno, maxgap = 1000))
 ## For each cluster id find all promoters that it overlaps and report a list of unique gene symbols
 region.Symbols <- tapply(olaps$subjectHits, olaps$queryHits, function(x) paste(unique(tss.anno[x]$Symbols), collapse = "; "))
 tabcom$promoter.overlap <- NA
 tabcom$promoter.overlap[as.numeric(names(region.Symbols))] <- region.Symbols
 
 ### Find overlaps with enhancers
-olaps <- as.data.frame(findOverlaps(GRanges(tabcom[,12:14]), enh.anno, maxgap = 1000))
+olaps <- as.data.frame(findOverlaps(GRanges(tabcom[,coord.cols]), enh.anno, maxgap = 1000))
 ## For each cluster id find all enhancers that it overlaps and report a list of enhancer ids (enhancer coordinates).
 region.Symbols <- tapply(olaps$subjectHits, olaps$queryHits, function(x) paste(names(enh.anno[x]), collapse = "; "))
 tabcom$enhancer.overlap <- NA
